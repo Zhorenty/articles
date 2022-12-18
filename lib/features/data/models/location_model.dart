@@ -1,0 +1,18 @@
+import 'package:new_udemy_course/features/domain/entities/person_entity.dart';
+
+class LocationModel extends LocationEntity {
+  LocationModel({name, url}) : super(name: name, url: url);
+
+  factory LocationModel.fromJson(Map<String, dynamic> json) {
+    return LocationModel(
+      name: json['name'] as String,
+      url: json['url'] as String,
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'url': url,
+    };
+  }
+}
