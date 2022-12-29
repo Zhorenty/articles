@@ -9,7 +9,7 @@ const SERVER_FAILURE_MESSAGE = 'Server failure';
 const CACHED_FAILURE_MESSAGE = 'Cache failure';
 
 class PersonListCubit extends Cubit<PersonState> {
-  final GetAllPersons getAllPersons;
+  final GetAllPersons getAllPersons; //useCase
   PersonListCubit({required this.getAllPersons}) : super(PersonEmpty());
 
   int page = 1;
