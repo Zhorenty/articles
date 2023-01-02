@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:new_udemy_course/features/domain/entities/person_entity.dart';
 import 'package:new_udemy_course/features/domain/usecases/get_all_persons.dart';
@@ -26,12 +28,13 @@ class PersonListCubit extends Cubit<PersonState> {
 
     final failureOrPerson = await getAllPersons(PagePersonParams(page: page));
 
-    failureOrPerson
-        .fold((error) => PersonError(message: _mapFailureToMessage(error)),
-            (character) {
+    failureOrPerson.fold(
+        (error) => emit(PersonError(message: _mapFailureToMessage(error))),
+        (character) {
       page++;
       final persons = (state as PersonLoading).oldPersonsList;
       persons.addAll(character);
+      log('List length: ${persons.length.toString()}');
       emit(PersonLoaded(persons));
     });
   }
