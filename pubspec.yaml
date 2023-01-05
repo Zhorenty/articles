@@ -46,6 +46,8 @@ dependencies:
   dartz: ^0.10.1
   flutter_spinkit: ^5.1.0
   cached_network_image: ^3.2.3
+  webview_flutter_plus: ^0.3.0+2
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/noimage.jpg
+    - assets/index.html
+    - assets/script.js
+    - assets/style.css
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
