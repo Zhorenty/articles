@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'global_key1.dart';
-import 'global_key2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: const GlobalKeyExampleTwo(),
+      // home: const GlobalKeyExampleTwo(),
     );
   }
 }
