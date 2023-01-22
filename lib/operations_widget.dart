@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:new_udemy_course/calculator.dart';
 import 'package:new_udemy_course/operations.dart';
+import 'package:new_udemy_course/service/number_api_service.dart';
 
 class OperationsWidget extends StatefulWidget {
   final Operations operations;
@@ -18,15 +20,17 @@ class OperationsWidget extends StatefulWidget {
 }
 
 class _OperationsWidgetState extends State<OperationsWidget> {
+  late NumberApiService _numberApiService;
   final _topTextController = TextEditingController();
   final _bottomTextContoroller = TextEditingController();
   String _operationResult = '';
-  String _resultAfterAnimation = '';
+  String numberInfo = '';
 
   late String _operationName;
 
   @override
   void initState() {
+    _numberApiService = NumberApiService(client: http.Client());
     _topTextController.addListener(_getResult);
     _bottomTextContoroller.addListener(_getResult);
     super.initState();
@@ -60,29 +64,46 @@ class _OperationsWidgetState extends State<OperationsWidget> {
             decoration: const InputDecoration(hintText: 'Enter 2nd number'),
           ),
           const SizedBox(height: 20),
-          AnimatedContainer(
-            padding: const EdgeInsets.all(8),
-            duration: const Duration(seconds: 1),
-            onEnd: (() {
-              setState(() {
-                _resultAfterAnimation = _operationResult.toString();
-              });
-            }),
-            color: _operationResult.isEmpty ? Colors.transparent : Colors.green,
-            curve: Curves.easeInOut,
-            child: Text(
-              _resultAfterAnimation.isNotEmpty
-                  ? 'Result: $_resultAfterAnimation'
-                  : 'Result: ',
-              style: Theme.of(context).textTheme.bodyText1,
-              textAlign: TextAlign.end,
-            ),
-          )
+          Text(
+            'Result: $_operationResult',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const Divider(),
+          Text(
+            numberInfo,
+            style: const TextStyle(fontSize: 20),
+          ),
+          ElevatedButton(
+            key: Key('elevated_button_$_operationName'),
+            child: const Text('Get Number Info'),
+            onPressed: () async {
+              if (_operationResult.isNotEmpty) {
+                var value = await _numberApiService
+                    .getNumberFact((double.parse(_operationResult)).round());
+                setState(() {
+                  numberInfo = value.text;
+                });
+              }
+            },
+          ),
 
-          // Text(
-          //   'Result: $_operationResult',
-          //   style: Theme.of(context).textTheme.titleLarge,
-          // ),
+          // AnimatedContainer(
+          //   padding: const EdgeInsets.all(8),
+          //   duration: const Duration(seconds: 1),
+          //   onEnd: (() {
+          //     setState(() {
+          //       _resultAfterAnimation = _operationResult.toString();
+          //     });
+          //   }),
+          //   color: _operationResult.isEmpty ? Colors.transparent : Colors.green,
+          //   curve: Curves.easeInOut,
+          //   child: Text(
+          //     _resultAfterAnimation.isNotEmpty
+          //         ? 'Result: $_resultAfterAnimation'
+          //         : 'Result: ',
+          //     style: Theme.of(context).textTheme.bodyText1,
+          //     textAlign: TextAlign.end,
+          //   ),
         ],
       ),
     );
