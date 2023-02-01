@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:new_udemy_course/model.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(PetAdapter());
   runApp(const MyApp());
 }
 
@@ -22,25 +17,23 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
-  final model = HiveModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Fashionista"s Closet'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ElevatedButton(
             child: const Text('Setup'),
-            onPressed: () {
-              model.setup;
-            },
+            onPressed: () {},
           ),
           ElevatedButton(
             child: const Text('Press me'),
-            onPressed: () {
-              model.doSome;
-            },
+            onPressed: () {},
           ),
         ],
       ),
